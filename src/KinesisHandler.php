@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of the JamesGSilva Monolog Kinesis Handler package.
- *
- * @author James G Silva <jamesgsilva@pm.me>
- *
- * @license https://opensource.org/licenses/mit-license.php MIT
- */
-
 declare(strict_types=1);
 
 namespace JamesGSilva\MonologKinesisHandler;
@@ -15,35 +7,34 @@ namespace JamesGSilva\MonologKinesisHandler;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 use Aws\Kinesis\KinesisClient;
+use InvalidArgumentException;
 
 /**
- * Writes to any kineses stream.
+ * Class KinesisHandler
  */
 class KinesisHandler extends AbstractProcessingHandler
 {
-
     /**
-     * This client is used to interact with the Amazon Kinesis service
+     * This client is used to interact with the Amazon Kinesis service.
      *
      * @var KinesisClient
      */
     private $client;
 
     /**
-     * The name of the stream to put the data record into
+     * The name of the stream to put the data record into.
      *
      * @var string
      */
     private $stream;
 
-
     /**
      * KinesisHandler constructor
      *
-     * @param KinesisClient $client This client is used to interact with the Amazon Kinesis service
-     * @param string        $stream The name of the stream to put the data record into
-     * @param int           $level  The minimum logging level at which this handler will be triggered
-     * @param bool          $bubble Whether the messages that are handled can bubble up the stack or not
+     * @param KinesisClient $client This client is used to interact with the Amazon Kinesis service.
+     * @param string        $stream The name of the stream to put the data record into.
+     * @param integer       $level  The minimum logging level at which this handler will be triggered.
+     * @param boolean       $bubble Whether the messages that are handled can bubble up the stack or not.
      */
     public function __construct(
         KinesisClient $client,
@@ -54,21 +45,19 @@ class KinesisHandler extends AbstractProcessingHandler
         parent::__construct($level, $bubble);
         $this->client = $client;
         $this->stream = $stream;
-
-    }//end __construct()
-
+    }
 
     /**
-     * Writes the record down to the log of the implementing handler
+     * Writes the record down to the log of the implementing handler.
      *
-     * @param array<string, mixed> $record record for put in stream
+     * @param array<string, mixed> $record Record for put in stream.
      *
      * @return void
      */
     protected function write(array $record): void
     {
         if (isset($record['formatted']) === false || is_string($record['formatted']) === false) {
-            throw new \InvalidArgumentException('KinesisHandler accepts only formatted records as a string');
+            throw new InvalidArgumentException('KinesisHandler accepts only formatted records as a string');
         }
 
         $request = [
@@ -77,8 +66,5 @@ class KinesisHandler extends AbstractProcessingHandler
             'Data'         => $record['formatted'],
         ];
         $this->client->putRecord($request);
-
-    }//end write()
-
-
-}//end class
+    }
+}

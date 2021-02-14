@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of the JamesGSilva Monolog Kinesis Handler package.
- *
- * @author James G Silva <jamesgsilva@pm.me>
- *
- * @license https://opensource.org/licenses/mit-license.php MIT
- */
-
 declare(strict_types=1);
 
 namespace JamesGSilva\MonologKinesisHandler;
@@ -18,16 +10,17 @@ use Monolog\Handler\HandlerInterface;
 use Monolog\Test\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * Class KinesisHandlerTest
+ */
 class KinesisHandlerTest extends TestCase
 {
-
     /**
-     * This client is used to interact with the Amazon Kinesis service
+     * This client is used to interact with the Amazon Kinesis service.
      *
      * @var KinesisClient&MockObject
      */
     private $client;
-
 
     /**
      * This method is called before each test.
@@ -41,36 +34,32 @@ class KinesisHandlerTest extends TestCase
             ->disableOriginalConstructor()
             ->onlyMethods(['__call'])
             ->getMock();
-
-    }//end setUp()
-
+    }
 
     /**
-     * Test class constructor
+     * Test class constructor.
      *
      * @return void
      */
     public function testConstruct(): void
     {
-        self::assertInstanceOf(KinesisHandler::class, new KinesisHandler($this->client, 'stream-name'));
-
-    }//end testConstruct()
-
+        $handler = new KinesisHandler($this->client, 'stream-name');
+        self::assertInstanceOf(KinesisHandler::class, $handler);
+    }
 
     /**
-     * Test class implements Handler interface
+     * Test class implements Handler interface.
      *
      * @return void
      */
     public function testInterface(): void
     {
-        self::assertInstanceOf(HandlerInterface::class, new KinesisHandler($this->client, 'stream-name'));
-
-    }//end testInterface()
-
+        $handler = new KinesisHandler($this->client, 'stream-name');
+        self::assertInstanceOf(HandlerInterface::class, $handler);
+    }
 
     /**
-     * Test Handle when record is not string, then throws exception
+     * Test Handle when record is not string, then throws exception.
      *
      * @return void
      */
@@ -86,12 +75,10 @@ class KinesisHandlerTest extends TestCase
         $handler = new KinesisHandler($this->client, 'stream-name');
         $handler->setFormatter($formatter);
         $handler->handle($record);
-
-    }//end testHandleAcceptsOnlyStringRecord()
-
+    }
 
     /**
-     * Test Handle when record is a string, then put record in kinesis stream
+     * Test Handle when record is a string, then put record in kinesis stream.
      *
      * @return void
      */
@@ -115,8 +102,5 @@ class KinesisHandlerTest extends TestCase
             ->method('__call')
             ->with('putRecord', [$expected]);
         $handler->handle($record);
-
-    }//end testHandle()
-
-
-}//end class
+    }
+}

@@ -5,9 +5,6 @@
     <file>src</file>
     <file>tests</file>
 
-    <exclude-pattern>*/src/Standards/*/Tests/*\.(inc|css|js)$</exclude-pattern>
-    <exclude-pattern>*/tests/Core/*/*\.(inc|css|js)$</exclude-pattern>
-
     <arg name="basepath" value="."/>
     <arg name="colors"/>
     <arg name="parallel" value="75"/>
@@ -18,22 +15,9 @@
         <type>error</type>
     </rule>
 
-    <!-- Include the whole PEAR standard -->
-    <rule ref="PEAR">
-        <exclude name="PEAR.NamingConventions.ValidFunctionName"/>
-        <exclude name="PEAR.NamingConventions.ValidVariableName"/>
-        <exclude name="PEAR.Commenting.ClassComment"/>
-        <exclude name="PEAR.Commenting.FileComment.MissingCategoryTag"/>
-        <exclude name="PEAR.Commenting.FileComment.MissingPackageTag"/>
-        <exclude name="PEAR.Commenting.FileComment.MissingLinkTag"/>
-        <exclude name="PEAR.Commenting.FileComment.MissingVersion"/>
-        <exclude name="PEAR.Commenting.InlineComment"/>
-    </rule>
-
     <!-- Include some sniffs from other standards that don't conflict with PEAR -->
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
     <rule ref="Squiz.Arrays.ArrayDeclaration"/>
-    <rule ref="Squiz.Commenting.ClosingDeclarationComment"/>
     <rule ref="Squiz.ControlStructures.ControlSignature"/>
     <rule ref="Squiz.ControlStructures.ElseIfDeclaration"/>
     <rule ref="Squiz.Commenting.BlockComment"/>
@@ -49,10 +33,6 @@
     <rule ref="Squiz.PHP.DisallowInlineIf"/>
     <rule ref="Squiz.Scope.MethodScope"/>
     <rule ref="Squiz.Strings.ConcatenationSpacing"/>
-    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
-    <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace"/>
-    <rule ref="Squiz.WhiteSpace.FunctionSpacing"/>
-    <rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
     <rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>

@@ -11,19 +11,21 @@
         }
     ],
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "phpstan": "vendor/bin/phpstan analyse",
-        "phpcs": "vendor/bin/phpcs"
+        "test": "vendor/bin/phpunit tests",
+        "fix": "vendor/bin/php-cs-fixer fix",
+        "analyse": "vendor/bin/phpstan analyse",
+        "check": "vendor/bin/phpcs"
     },
     "require": {
         "php": ">=7.2",
-        "monolog/monolog": "^2.2",
-        "aws/aws-sdk-php": "^3.173"
+        "monolog/monolog": "^2.2"
     },
     "require-dev": {
+        "aws/aws-sdk-php": "^3.173",
         "phpunit/phpunit": "^9.5",
         "phpstan/phpstan": "^0.12.72",
-        "squizlabs/php_codesniffer": "^3.5"
+        "squizlabs/php_codesniffer": "^3.5",
+        "friendsofphp/php-cs-fixer": "^2.18"
     },
     "suggest": {
         "aws/aws-sdk-php": "Allow sending log messages to AWS Kinesis"
@@ -37,5 +39,9 @@
         "psr-4": {
             "JamesGSilva\\MonologKinesisHandler\\": "tests"
         }
+    },
+    "config": {
+        "sort-packages": true,
+        "platform-check": false
     }
 }

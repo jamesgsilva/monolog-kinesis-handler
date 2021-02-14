@@ -4,13 +4,15 @@ A monolog handler for AWS Kinesis streams.
 
 ## Installation
 
-Install the latest version with
+Require this library through composer:
 
 ```bash
 $ composer require jamesgsilva/monolog-kinesis-handler
 ```
 
 ## Usage
+
+You can find usage example [here](example) using [kinesalite](https://github.com/mhart/kinesalite) an implementation of Amazon's Kinesis built on LevelDB.
 
 ```php
 <?php
