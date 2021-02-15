@@ -1,4 +1,4 @@
-name: PHPStan
+name: QA
 
 on:
   push:
@@ -30,5 +30,14 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
+      - name: Run PHPCSFixer
+        run: composer run-script cs-check
+
+      - name: Run PHPCS
+        run: composer run-script phpcs
+
       - name: Run PHPStan
-        run: composer analyse
+        run: composer run-script phpstan
+
+      - name: Run PHPUnit
+        run: composer run-script test

@@ -12,9 +12,10 @@
     ],
     "scripts": {
         "test": "vendor/bin/phpunit tests",
-        "fix": "vendor/bin/php-cs-fixer fix",
-        "analyse": "vendor/bin/phpstan analyse",
-        "check": "vendor/bin/phpcs"
+        "cs-check": "vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php_cs",
+        "cs-fix": "vendor/bin/php-cs-fixer fix --diff --config=.php_cs",
+        "phpstan": "vendor/bin/phpstan analyse",
+        "phpcs": "vendor/bin/phpcs"
     },
     "require": {
         "php": ">=7.2",

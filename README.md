@@ -12,7 +12,7 @@ $ composer require jamesgsilva/monolog-kinesis-handler
 
 ## Usage
 
-You can find usage example [here](example) using [kinesalite](https://github.com/mhart/kinesalite) an implementation of Amazon's Kinesis built on LevelDB.
+You can find usage examples [here](docs/examples) using [kinesalite](https://github.com/mhart/kinesalite) an implementation of Amazon's Kinesis built on LevelDB.
 
 ```php
 <?php
@@ -23,3 +23,7 @@ $logger = new \Monolog\Logger('channel');
 $logger->pushHandler($kinesisHandler);
 $logger->info('Hello Kinesis');
 ```
+
+## Contributing
+
+Feel free to contribute by opening a pull request. Bug fixes or feature suggestions are always welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for information.

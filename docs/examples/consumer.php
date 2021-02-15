@@ -2,38 +2,14 @@
 
 require '../vendor/autoload.php';
 
-use Aws\Kinesis\KinesisClient;
-use Monolog\Logger;
-use JamesGSilva\MonologKinesisHandler\KinesisHandler;
-
-$kinesis = new KinesisClient([
-    'endpoint' => 'http://localhost:4567',
-    'region' => 'us-west-2',
-    'version' => 'latest',
-    'credentials' => [
-        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-    ],
-    'retries'     => 10,
-    'delay'       => 1000,
-    'synchronous' => true,
-    'http'        => [
-        'timeout' => 5,
-        'connect_timeout' => 5,
-        'verify' => false
-    ]
-]);
+/** @var \Aws\Kinesis\KinesisClient $kinesis */
+$kinesis = require 'kinesis.php';
 $shardCount = 2;
 $streamName = 'my_stream_name';
-try {
-    $kinesis->createStream([
-        'ShardCount' => $shardCount,
-        'StreamName' => $streamName,
-    ]);
-} catch (\Throwable $e) {
-    echo $e->getMessage(), PHP_EOL;
-}
-
+$kinesis->createStream([
+    'ShardCount' => $shardCount,
+    'StreamName' => $streamName,
+]);
 $numberOfRecordsPerBatch = 10;
 $res = $kinesis->describeStream([ 'StreamName' => $streamName ]);
 $shardIds = $res->search('StreamDescription.Shards[].ShardId');
@@ -43,7 +19,7 @@ foreach ($shardIds as $shardId) {
     echo "ShardId: $shardId\n";
     $res = $kinesis->getShardIterator([
         'ShardId' => $shardId,
-        'ShardIteratorType' => 'TRIM_HORIZON', // 'AT_SEQUENCE_NUMBER|AFTER_SEQUENCE_NUMBER|TRIM_HORIZON|LATEST'
+        'ShardIteratorType' => 'TRIM_HORIZON',
         'StreamName' => $streamName,
     ]);
     $shardIterator = $res->get('ShardIterator');
