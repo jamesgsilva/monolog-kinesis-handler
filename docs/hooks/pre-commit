@@ -1,0 +1,40 @@
+#!/usr/bin/env php
+<?php
+
+echo 'Run PHPCSFixer ' . PHP_EOL;
+exec('composer run-script cs-check', $output, $returnCode);
+if ($returnCode !== 0) {
+    echo PHP_EOL . implode($output, PHP_EOL) . PHP_EOL;
+    echo 'Aborting commit by cs-check. Fix with composer cs-fix' . PHP_EOL;
+    exit(1);
+}
+echo $output[1] . PHP_EOL;
+
+echo 'Run PHPCS ' . PHP_EOL;
+exec('composer run-script phpcs', $output, $returnCode);
+if ($returnCode !== 0) {
+    echo PHP_EOL . implode($output, PHP_EOL) . PHP_EOL;
+    echo 'Aborting commit by phpcs' . PHP_EOL;
+    exit(1);
+}
+echo $output[2] . PHP_EOL;
+
+echo 'Run PHPStan ' . PHP_EOL;
+exec('composer run-script phpstan', $output, $returnCode);
+if ($returnCode !== 0) {
+    echo PHP_EOL . implode($output, PHP_EOL) . PHP_EOL;
+    echo 'Aborting commit by phpstan' . PHP_EOL;
+    exit(1);
+}
+echo $output[8] . ' - ' . $output[2] . PHP_EOL;
+
+echo 'Run PHPUnit ' . PHP_EOL;
+exec('composer run-script test', $output, $returnCode);
+if ($returnCode !== 0) {
+  echo PHP_EOL . implode($output, PHP_EOL) . PHP_EOL;
+  echo 'Aborting commit by tests' . PHP_EOL;
+  exit(1);
+}
+echo array_pop($output) . PHP_EOL;
+
+exit(0);

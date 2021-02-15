@@ -15,6 +15,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 class KinesisHandlerTest extends TestCase
 {
+
     /**
      * This client is used to interact with the Amazon Kinesis service.
      *
